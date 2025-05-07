@@ -172,3 +172,14 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+.idea
+
+sdataset/
+resources/
+results/
+embeddings/
+csv_results_table/
+models/
+
+.DS_Store
