@@ -3,6 +3,8 @@ import torch.optim as optim
 from transformers import AutoTokenizer, AutoModel
 import os
 import time
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[3]))
 
 from scripts.rq1.datasets import prepare_datasets_and_loaders_across_app_triplet
 from scripts.utils.embedding import run_embedding_pipeline_bert

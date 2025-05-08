@@ -2,6 +2,8 @@ import torch
 import torch.optim as optim
 import os
 import time
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[3]))
 
 from transformers import AutoTokenizer, AutoModel
 from scripts.rq1.datasets import prepare_datasets_and_loaders_within_app_triplet
