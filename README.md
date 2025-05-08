@@ -6,7 +6,6 @@
 
 Follow these steps to create and activate the Conda environment to set up the project.
 
----
 
 ### 1) Clone the repository
 
@@ -34,7 +33,6 @@ conda env create --name snn-ndd -f environment.yml
 ```bash
 conda activate snn-ndd
 ```
-snn-ndd
 
 
 ## 📂 Repository Structure
@@ -68,7 +66,6 @@ snn-ndd
 
 ## 🖥️ Generate Reported Results
 
----
 
 ### 1) RQ1: Near-Duplicate Detection
 
@@ -81,7 +78,7 @@ snn-ndd
    https://syncandshare.lrz.de/getlink/fiY4KcSXCwSLW8g8TVmnep/resources.zip
    ```
 
-   *Password: `password`*
+   *Password: `snn-ndd`*
 
 2. **Unpack and move the resources folder to the base project**
 
@@ -129,9 +126,3 @@ snn-ndd
 
 
 ## ⚙️ Run New Experiment
-
-
-
-# Project: Near-Duplicate Detection Thesis
-
-This repository contains the implementation and evaluation for the Near-Duplicate Detection research question (RQ1) as part of my master's thesis in web application testing using AI-driven neural embeddings.
