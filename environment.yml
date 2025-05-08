@@ -1,0 +1,26 @@
+name: snn-ndd
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - numpy<2
+  - pandas
+  - scipy
+  - scikit-learn==1.5.1
+  - tensorflow
+  - transformers
+  - hyperopt
+  - natsort
+  - pytorch
+  - tensorboard
+  - wget
+  - imbalanced-learn
+  - gensim
+  - matplotlib
+  - scipy=1.10.1
+  - bs4
+  - pip
+  - pip:
+    - -e .
