@@ -1,4 +1,5 @@
 import os
+import sys
 from collections import defaultdict
 import numpy as np
 import torch
@@ -37,7 +38,8 @@ def run_embedding_pipeline_doc2vec(pairs_data, dom_root_dir, doc2vec_model_path,
         dom_path = os.path.join(dom_root_dir, appname, 'doms', f"{state_id}.html")
         if not os.path.isfile(dom_path):
             state_embeddings[(appname, state_id)] = torch.zeros(vector_size, dtype=torch.float)
-            continue
+            print(f"Error: {dom_root_dir} does not exists", file=sys.stderr)
+            sys.exit(1)
 
         with open(dom_path, "r", encoding="utf-8", errors="ignore") as f:
             dom_content = f.read()

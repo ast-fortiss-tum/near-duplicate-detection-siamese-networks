@@ -1,9 +1,7 @@
 import torch
 import torch.optim as optim
-import sys
 import os
 import time
-sys.path.append("/Users/kasun/Documents/uni/semester-4/thesis/NDD")
 
 from scripts.rq1.datasets import prepare_datasets_and_loaders_across_app_contrastive
 from scripts.utils.embedding import run_embedding_pipeline_doc2vec
@@ -16,7 +14,7 @@ from scripts.utils.utils import (
     initialize_weights,
     save_results_to_excel,
     load_pairs_from_db,
-    initialize_device,
+    initialize_device, create_folders_if_not_exist,
 )
 
 ##############################################################################
@@ -27,24 +25,24 @@ if __name__ == "__main__":
     seed = 42
     set_all_seeds(seed)
     device = initialize_device()
+    base_path    = os.getcwd()
 
     selected_apps = [
         'addressbook', 'claroline', 'ppma', 'mrbs',
         'mantisbt', 'dimeshift', 'pagekit', 'phoenix','petclinic'
     ]
 
-    base_path       = "/Users/kasun/Documents/uni/semester-4/thesis/NDD"
     table_name      = "nearduplicates"
     db_path         = f"{base_path}/dataset/SS_refined.db"
     dom_root_dir    = f"{base_path}/resources/doms"
-    results_dir     = f"{base_path}/results"
+    results_dir     = f"{base_path}/results/rq1"
     model_dir       = f"{base_path}/models"
     emb_dir         = f"{base_path}/embeddings"
     title           = "acrossapp_doc2vec"
     setting_key     = "contrastive"
     save_results    = True
 
-    doc2vec_path  = "/Users/kasun/Documents/uni/semester-4/thesis/NDD/resources/embedding-models/content_tags_model_train_setsize300epoch50.doc2vec.model"
+    doc2vec_path    = f"{base_path}/resources/embedding-models/content_tags_model_train_setsize300epoch50.doc2vec.model"
 
     batch_size    = 128
     num_epochs    = 10
@@ -54,6 +52,7 @@ if __name__ == "__main__":
     overlap       = 0
 
     results = []
+    create_folders_if_not_exist([model_dir, emb_dir, results_dir])
 
     for test_app in selected_apps:
         print("\n=============================================")

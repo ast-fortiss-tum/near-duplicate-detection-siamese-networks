@@ -380,7 +380,7 @@ def get_model(model_path, setting, device, dimension):
 # For crawling rq3
 # Sanitize JSON strings by removing non-printable ASCII characters, TODO: check if this destroys the further processing somehow
 def sanitize_json_string_crawling(json_str):
-    # Define a regex pattern for valid printable ASCII characters (excluding control characters)
+    # regex pattern for valid printable ASCII characters (excluding control characters)
     printable_ascii_pattern = re.compile(r'[\x20-\x7E]')
 
     # Remove all characters that do not match the printable ASCII pattern
@@ -626,3 +626,8 @@ def print_report(app_time, baseline, representation):
     for app, time in app_time.items():
         print(f"{app}: {time:.2f} seconds")
     print(f"Avg. time: {sum(app_time.values()) / len(app_time):.2f} seconds")
+
+# create folders if they don't exist
+def create_folders_if_not_exist(paths):
+    for path in paths:
+        os.makedirs(path, exist_ok=True)

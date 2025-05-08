@@ -1,9 +1,7 @@
 import torch
 import torch.optim as optim
-import sys
 import os
 import time
-sys.path.append("/Users/kasun/Documents/uni/semester-4/thesis/NDD")
 
 from scripts.rq1.datasets import prepare_datasets_and_loaders_within_app_contrastive
 from scripts.utils.embedding import run_embedding_pipeline_markuplm
@@ -16,7 +14,7 @@ from scripts.utils.utils import (
     initialize_weights,
     save_results_to_excel,
     load_single_app_pairs_from_db,
-    initialize_device
+    initialize_device, create_folders_if_not_exist
 )
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -28,17 +26,17 @@ if __name__ == "__main__":
     seed = 42
     set_all_seeds(seed)
     device = initialize_device()
+    base_path = os.getcwd()
 
     selected_apps = [
         'addressbook', 'claroline', 'ppma', 'mrbs',
         'mantisbt', 'dimeshift', 'pagekit', 'phoenix','petclinic'
     ]
 
-    base_path    = "/Users/kasun/Documents/uni/semester-4/thesis/NDD"
     table_name   = "nearduplicates"
     db_path      = f"{base_path}/dataset/SS_refined.db"
     dom_root_dir = f"{base_path}/resources/doms"
-    results_dir  = f"{base_path}/results"
+    results_dir  = f"{base_path}/results/rq1"
     model_dir    = f"{base_path}/models"
     emb_dir      = f"{base_path}/embeddings"
     title        = "withinapp_markuplm"
@@ -55,6 +53,7 @@ if __name__ == "__main__":
     overlap       = 0
 
     results = []
+    create_folders_if_not_exist([model_dir, emb_dir, results_dir])
 
     for app in selected_apps:
         print("\n=============================================")
