@@ -26,7 +26,6 @@ conda env create --name snn-ndd -f environment.yml
 
 1. Creates a new Conda env called **`snn-ndd`**.
 2. Installs all Conda‑managed packages (PyTorch, transformers, gensim, …).
-3. Runs `pip install -e .` inside the env, wiring up your local source tree as a package named **`ndd`**.
 
 ### 3) Activate the environment
 

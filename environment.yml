@@ -22,5 +22,3 @@ dependencies:
   - scipy=1.10.1
   - bs4
   - pip
-  - pip:
-    - -e .
