@@ -1,10 +1,12 @@
 import os
-import sys
 import pandas as pd
 from torch.utils.data import Dataset, DataLoader
 import torch
 from transformers import AutoTokenizer, AutoModel
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[3]))
+
 
 from scripts.utils.embedding import run_embedding_pipeline_doc2vec, run_embedding_pipeline_bert,run_embedding_pipeline_markuplm
 from scripts.utils.utils import (
