@@ -25,7 +25,7 @@ conda env create --name snn-ndd -f environment.yml
 *What this does*
 
 1. Creates a new Conda env called **`snn-ndd`**.
-2. Installs all Conda‑managed packages (PyTorch, transformers, gensim, …).
+   2. Installs all Conda‑managed packages (PyTorch, transformers, gensim, …).
 
 ### 3) Activate the environment
 
@@ -63,10 +63,12 @@ conda activate snn-ndd
 ```
 
 
+
 ## 🖥️ Generate Reported Results
 
 
 ### 1) RQ1: Near-Duplicate Detection
+
 
 #### a) SNN Evaluation
 
@@ -79,48 +81,70 @@ conda activate snn-ndd
 
    *Password: `snn-ndd`*
 
-2. **Unpack and move the resources folder to the base project**
+   2. **Unpack and move the resources folder to the base project**
 
-   ```bash
-   unzip resources.zip -d resources
+      ```bash
+      unzip resources.zip -d resources
+      ```
+
+      You should now have folders:
+
+      ```
+      dataset
+      scripts
+      resources/
+      ├── baseline-dataset/
+      ├── baseline-runner/
+      ├── doms/
+      └── embedding-models/
+      ```
+
+   3. **Run the evaluation**
+
+      ```bash
+      python scripts/rq1/<evaluation_setting>-app-classification/<embedding_type>_contrastive_classification.py
+      ```
+
+      * `<evaluation_setting>`:
+
+        * `within`
+        * `across`
+      * `<embedding_type>`:
+
+        * `bert` (adjust the variant inside the script for ModernBERT)
+        * `doc2vec`
+        * `markuplm`
+
+   4. **Outputs**
+
+      * Experiment results → `results/rq1/`
+      * Trained models → `models/`
+      * Cached embeddings → `embedding/`
+
+> **Re-runs** will automatically reuse any existing models or embeddings; nothing is re-trained if already present.
+
+
+#### b) FragGen Evaluation
+
+   Run the evaluation from the project base directory
+
+   ```
+   python scripts/rq1/baseline-classification/within_app_fraggen.py
    ```
 
-   You should now have folders:
+
+#### c) Other Baseline Methods - (WEBEMBED, RTED, PDIFF) Evaluation
+
+   Run the evaluation from the project base directory
 
    ```
-   dataset
-   scripts
-   resources/
-   ├── baseline-dataset/
-   ├── baseline-runner/
-   ├── doms/
-   └── embedding-models/
-   ```
-
-3. **Run the evaluation**
-
-   ```bash
-   python scripts/rq1/<evaluation_setting>-app-classification/<embedding_type>_contrastive_classification.py
+   python scripts/rq1/baseline-classification/<evaluation_setting>_app_baseline.py
    ```
 
    * `<evaluation_setting>`:
 
      * `within`
      * `across`
-   * `<embedding_type>`:
-
-     * `bert` (select or adjust the variant inside the script)
-     * `doc2vec`
-     * `markuplm`
-
-4. **Outputs**
-
-   * Experiment results → `results/rq1/`
-   * Trained models → `models/`
-   * Cached embeddings → `embedding/`
-
-> **Re-runs** will automatically reuse any existing models or embeddings; nothing is re-trained if already present.
-
 
 
 

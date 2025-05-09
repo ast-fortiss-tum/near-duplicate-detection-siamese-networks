@@ -8,6 +8,8 @@ from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_sc
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 import sqlite3
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[3]))
 
 def get_db_retained(sqlite_db_path, table_name):
     conn = sqlite3.connect(sqlite_db_path)
@@ -37,7 +39,6 @@ def filter_dataframes(df, df_db_retained):
 
     return df_filtered
 
-
 if __name__ == '__main__':
     '''
     RQ1: configuration 3/3 WITHIN APPS
@@ -50,28 +51,23 @@ if __name__ == '__main__':
     SAVE_MODELS = True
 
     #for data refinement
-    sqlite_db_path = '../SS_refined.db'
     table_name = 'nearduplicates'
+    base_path = os.getcwd()
 
-    embedding_type = ['content', 'tags', 'content_tags', 'DOM_RTED', 'VISUAL_PDiff']
-
+    embedding_type = ['content_tags', 'DOM_RTED', 'VISUAL_PDiff']
     apps = ['addressbook', 'claroline', 'ppma', 'mrbs', 'mantisbt', 'dimeshift', 'pagekit', 'phoenix', 'petclinic']
 
-    # create csv file to store the results
-    if not os.path.exists(r'../csv_results_table/rq1-within-apps.csv'):
-        header = ['App', 'Model', 'Embedding', 'Classifier', 'Accuracy', 'Precision', 'Recall', 'F1_0', 'F1_1', 'F1_w']
-        with open('../csv_results_table/rq1-within-apps.csv', 'w', encoding='UTF8') as f:
-            writer = csv.writer(f)
-            # write the header
-            writer.writerow(header)
+    baseline_model_dir = f"{base_path}/baseline-models"
+    sqlite_db_path     = f"{base_path}/dataset/SS_refined.db"
+    results_dir_path    = f"{base_path}/results/rq1"
+    threshold_Set      = f"{base_path}/resources/baseline-dataset/SS_threshold_set.csv"
+
+    os.makedirs(baseline_model_dir, exist_ok=True)
+    comparison_df = None
 
     for app in apps:
         for emb in embedding_type:
             print("app: %s\tembedding: %s" % (app, emb))
-
-            comparison_df = None
-            if OUTPUT_CSV:
-                comparison_df = pd.read_csv('../csv_results_table/rq1-within-apps.csv')
 
             names = [
                 # "Dummy",
@@ -83,7 +79,6 @@ if __name__ == '__main__':
                 # "Ensemble",
                 # "Neural Network",
             ]
-
             classifiers = [
                 # DummyClassifier(strategy="stratified"),
                 # "Threshold",
@@ -108,8 +103,8 @@ if __name__ == '__main__':
                     feature = 'doc2vec_distance_' + emb
 
                 if name == "Threshold":
-                    df_train = pd.read_csv('SS_threshold_set.csv')
-                    df_test = pd.read_csv('SS_threshold_set.csv')
+                    df_train = pd.read_csv(threshold_Set)
+                    df_test = pd.read_csv(threshold_Set)
 
                     df_train = df_train.query("appname == @app")
                     df_test = df_test.query("appname != @app")
@@ -160,7 +155,7 @@ if __name__ == '__main__':
                     f1_0 = 2 * ((precision * recall) / (precision + recall))
                     f1_1 = 2 * ((precision * recall) / (precision + recall))
                 else:
-                    df = pd.read_csv('SS_threshold_set.csv', quotechar='"', escapechar='\\', on_bad_lines='warn')
+                    df = pd.read_csv(threshold_Set, quotechar='"', escapechar='\\', on_bad_lines='warn')
                     df = df.query("appname == @app")
 
                     # we only consider the SS dataset with is_retain flagged 1 pairs for analysis
@@ -186,10 +181,9 @@ if __name__ == '__main__':
 
                     # fit the classifier
                     model = model.fit(X_train, y_train)
-
                     # save the classifier
                     if SAVE_MODELS:
-                        classifier_path = '../trained_classifiers/within-apps-' + app + '-' + \
+                        classifier_path = f'{baseline_model_dir}/within-apps-' + app + '-' + \
                                           name.replace(" ", "-").replace("_", "-").lower() + \
                                           '-' + \
                                           feature.replace(" ", "-").replace("_", "-").lower() + \
@@ -234,20 +228,19 @@ if __name__ == '__main__':
                 else:
                     print('nope')
 
-                if OUTPUT_CSV:
-                    d1 = pd.DataFrame(
-                        {'App': app,
-                         'Model': ['DS_' + emb + '_' + 'modelsize100' + 'epoch31'],
-                         'Embedding': [a],
-                         'Classifier': [name],
-                         'Accuracy': [accuracy],
-                         'Precision': [precision],
-                         'Recall': [recall],
-                         'F1_0': [f1_0],
-                         'F1_1': [f1_1],
-                         'F1_w': [f1_weighted]})
+                d1 = pd.DataFrame(
+                    {'App': app,
+                     'Model': ['DS_' + emb + '_' + 'modelsize100' + 'epoch31'],
+                     'Embedding': [a],
+                     'Classifier': [name],
+                     'Accuracy': [accuracy],
+                     'Precision': [precision],
+                     'Recall': [recall],
+                     'F1_0': [f1_0],
+                     'F1_1': [f1_1],
+                     'F1_w': [f1_weighted]})
 
-                    comparison_df = pd.concat([comparison_df, d1])
+            comparison_df = pd.concat([comparison_df, d1])
 
-            if OUTPUT_CSV:
-                comparison_df.to_csv('../../results/rq1/baseline', index=False)
+    if OUTPUT_CSV:
+        comparison_df.to_csv(f'{results_dir_path}/baselines-within-apps.csv', index=False)

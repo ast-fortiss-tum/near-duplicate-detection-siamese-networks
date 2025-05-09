@@ -175,11 +175,11 @@ cython_debug/
 
 .idea
 
-sdataset/
 resources/
 results/
 embeddings/
 csv_results_table/
 models/
+baseline-models/
 
 .DS_Store
