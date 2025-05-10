@@ -3,12 +3,12 @@ import pickle
 import sqlite3
 import pandas as pd
 
-BASE_PATH   = "/Users/kasun/Documents/uni/semester-4/thesis/NDD"
+BASE_PATH   = os.getcwd()
 DB_PATH     = f"{BASE_PATH}/dataset/SS_refined.db"
 TABLE_NAME  = "nearduplicates"
-MODEL_DIR   = f"{BASE_PATH}/resources/baseline-trained-classifiers"
+MODEL_DIR   = f"{BASE_PATH}/baseline-models"
 CSV_PATH    = f"{BASE_PATH}/resources/baseline-dataset/SS_threshold_set.csv"
-RESULTS_DIR = f"{BASE_PATH}/results"
+RESULTS_DIR = f"{BASE_PATH}/results/rq1"
 
 SELECTED_APPS = [
     'addressbook', 'claroline', 'ppma', 'mrbs',
@@ -88,6 +88,7 @@ def main():
     # -------------------------------------------------------
     df_csv = pd.read_csv(CSV_PATH, quotechar='"', escapechar='\\', on_bad_lines='warn')
     df_db_retained = get_db_retained(DB_PATH, TABLE_NAME)
+    os.makedirs(RESULTS_DIR, exist_ok=True)
 
     merge_cols = ["appname", "state1", "state2"]
     df_merged = pd.merge(
@@ -207,7 +208,7 @@ def main():
     #  Save final results
     # -------------------------------------------------------
     df_results = pd.DataFrame(results)
-    out_file = os.path.join(RESULTS_DIR, "rq1", "other_baseline_pair_analysis.xlsx")
+    out_file = os.path.join(RESULTS_DIR, "other_baseline_pair_analysis.xlsx")
     df_results.to_excel(out_file, index=False)
     print(f"\n[Info] Baseline dummy analysis complete. Results saved to: {out_file}")
 

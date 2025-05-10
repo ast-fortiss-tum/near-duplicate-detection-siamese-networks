@@ -4,7 +4,7 @@ import sqlite3
 import pandas as pd
 import numpy as np
 
-BASE_PATH   = "/Users/kasun/Documents/uni/semester-4/thesis/NDD"
+BASE_PATH   = os.getcwd()
 DB_PATH     = f"{BASE_PATH}/dataset/SS_refined.db"
 TABLE_NAME  = "nearduplicates"
 JSON_PATH   = f"{BASE_PATH}/resources/baseline-dataset/combinedEntries.json"
@@ -86,6 +86,7 @@ def compute_nd_analysis(y_true, y_pred, nd_types):
 def main():
     # -------------------- A) Read DB + JSON --------------------------------
     df_db_retained = get_db_retained(DB_PATH, TABLE_NAME)
+    os.makedirs(RESULTS_DIR, exist_ok=True)
 
     with open(JSON_PATH, "r", encoding="utf-8") as f:
         all_entries = json.load(f)
@@ -166,7 +167,7 @@ def main():
     # -------------------- D) Save Results to Excel -------------------------
 
     df_results = pd.DataFrame(results)
-    out_file = os.path.join(RESULTS_DIR, "rq1", "fraggen_baseline_pair_analysis.xlsx")
+    out_file = os.path.join(RESULTS_DIR, "fraggen_baseline_pair_analysis.xlsx")
     df_results.to_excel(out_file, index=False)
     print(f"\n[Info] Baseline analysis complete. Results saved to: {out_file}")
 

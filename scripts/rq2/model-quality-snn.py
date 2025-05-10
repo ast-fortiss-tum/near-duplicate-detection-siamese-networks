@@ -1,17 +1,17 @@
 import csv
 import json
 import os
-import sys
 from datetime import datetime
 
 import torch.nn.functional as F
 import torch
 from transformers import AutoTokenizer, AutoModel
-sys.path.append("/Users/kasun/Documents/uni/semester-4/thesis/NDD")
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[3]))
 
 from scripts.utils.embedding import run_embedding_pipeline_bert, run_embedding_pipeline_doc2vec, run_embedding_pipeline_markuplm
-from scripts.utils.utils import load_single_app_pairs_from_db, initialize_device, get_model
-import time
+from scripts.utils.utils import load_single_app_pairs_from_db, initialize_device, get_model, create_folders_if_not_exist
+
 
 def is_duplicate_contrastive(model, state_embeddings, app, state1, state2, device, threshold=0.5):
     model.eval()
@@ -89,9 +89,8 @@ def get_embedding(embedding_type, model_name, app_pairs, dom_root_dir, chunk_siz
 
     return state_embeddings, final_input_dim
 
-
-base_path = '/Users/kasun/Documents/uni/semester-4/thesis/NDD'
-doc2vec_path = "/Users/kasun/Documents/uni/semester-4/thesis/NDD/resources/embedding-models/content_tags_model_train_setsize300epoch50.doc2vec.model"
+base_path    = os.getcwd()
+doc2vec_path = f"{base_path}/resources/embedding-models/content_tags_model_train_setsize300epoch50.doc2vec.model"
 
 APPS = [
     'addressbook', 'claroline', 'ppma', 'mrbs',
@@ -331,7 +330,7 @@ table_name   = "nearduplicates"
 db_path      = f"{base_path}/dataset/SS_refined.db"
 dom_root_dir = f"{base_path}/resources/doms"
 emb_dir      = f"{base_path}/embeddings"
-
+results_dir  = f"{base_path}/results/rq2"
 
 # -----------------------------------------------------------------------------
 # RQ2 - Model Quality
@@ -346,7 +345,8 @@ if __name__ == '__main__':
 
         print(f'\n======== Setting {setting}  Embedding : {embedding_type} ========')
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f'{base_path}/results/rq2/new_{title}_{setting}_model_quality_{timestamp}.csv'
+        filename = f'{results_dir}/{title}_{setting}_model_quality_{timestamp}.csv'
+        create_folders_if_not_exist([results_dir])
 
         if OUTPUT_CSV and not os.path.exists(filename):
             header = ['Setting', 'App', 'Method', 'Precision', 'Recall', 'F1']
@@ -379,7 +379,7 @@ if __name__ == '__main__':
                 )
                 model = get_model(model_path, setting, device, final_input_dim)
 
-                cluster_file_name = f'{base_path}/outputs/{app}.json'
+                cluster_file_name = f'{base_path}/dataset/clusters/{app}.json'
                 if not os.path.exists(cluster_file_name):
                     print(f"[Warning] No cluster file for {app} => {cluster_file_name}. Skipping coverage.")
                     continue
