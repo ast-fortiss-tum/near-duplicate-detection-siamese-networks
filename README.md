@@ -146,6 +146,40 @@ conda activate snn-ndd
      * `within`
      * `across`
 
+### 2) RQ2: Model Quality
+
+#### a) SNN Evaluation
+
+Run below command from the project base directory. Results will be saved in `results/rq2/`
+
+   ```
+   python scripts/rq2/model-quality-snn.py
+   ```
+
+#### b) FRAGGEN Evaluation
+
+Run below command from the project base directory. Results will be saved in `results/rq2/`
+
+   ```
+   python scripts/rq2/fraggen.py
+   ```
+
+#### c) WEBEMBED Evaluation
+
+Run below commands from the project base directory one after the other. The first scripts generates intermediate results files in `resources/csv_results_table/`. The second script generates the RQ2 results and save in `results/rq2/`
+
+   ```
+   python scripts/rq2/a-webembed.py
+   python scripts/rq2/b-webembed.py
+   ```
+
+#### d) Other Baseline (RTED and PDIFF) Evaluation
+
+Run below commands from the project base directory one after the other. The first scripts generates intermediate results files in `resources/csv_results_table/`. The second script generates the RQ2 results and save in `results/rq2/`
+   ```
+   python scripts/rq2/a-other-baselines.py
+   python scripts/rq2/b-other-baselines.py
+   ```
 
 
 ## ⚙️ Run New Experiment
