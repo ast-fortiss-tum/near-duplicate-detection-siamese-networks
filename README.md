@@ -16,7 +16,7 @@ cd near-duplicate-detection-siamese-networks
 
 ### 2) Create the Conda environment
 
-The `environment.yml` already pins compatible versions (Python 3.11, NumPy < 2, SciPy 1.10.1, etc.) and contains the line `- -e .` so your code is installed automatically.
+The `environment.yml` already pins compatible versions.
 
 ```bash
 conda env create --name snn-ndd -f environment.yml
@@ -25,7 +25,7 @@ conda env create --name snn-ndd -f environment.yml
 *What this does*
 
 1. Creates a new Conda env called **`snn-ndd`**.
-   2. Installs all Conda‑managed packages (PyTorch, transformers, gensim, …).
+2. Installs all Conda‑managed packages.
 
 ### 3) Activate the environment
 
