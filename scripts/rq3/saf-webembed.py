@@ -2,12 +2,13 @@ import os
 import json
 import pickle
 import sys
-
 import numpy as np
 from flask import Flask, request, jsonify
 from gensim.models import Doc2Vec
 from torch import cosine_similarity
-sys.path.append("/Users/kasun/Documents/uni/semester-4/thesis/NDD")
+
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
 
 from scripts.utils.utils import embed_dom_doc2vec_crawling, initialize_device, fix_json_crawling
 
@@ -15,8 +16,8 @@ from scripts.utils.utils import embed_dom_doc2vec_crawling, initialize_device, f
 #  Global settings and baseline model info
 # -----------------------------------------------------------------
 no_of_inferences = 0
-BASE_PATH = "/Users/kasun/Documents/uni/semester-4/thesis/NDD"
-MODEL_DIR = os.path.join(BASE_PATH, "resources/baseline-trained-classifiers")
+BASE_PATH = os.getcwd()
+MODEL_DIR = f"{BASE_PATH}/baseline-models"
 SELECTED_APPS = [
     'addressbook', 'claroline', 'ppma', 'mrbs',
     'mantisbt', 'dimeshift', 'pagekit', 'phoenix', 'petclinic'
@@ -32,7 +33,7 @@ baseline_model_info = {
 # -----------------------------------------------------------------
 #  Load the doc2vec model (used for the "webembed" feature extraction)
 # -----------------------------------------------------------------
-DOC2VEC_PATH = os.path.join(BASE_PATH, "resources/embedding-models", "content_tags_model_train_setsize300epoch50.doc2vec.model")
+DOC2VEC_PATH = os.path.join(BASE_PATH, "resources/embedding-models/content_tags_model_train_setsize300epoch50.doc2vec.model")
 doc2vec_model = Doc2Vec.load(DOC2VEC_PATH)
 
 # -----------------------------------------------------------------

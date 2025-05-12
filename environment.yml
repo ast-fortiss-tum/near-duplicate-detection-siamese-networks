@@ -21,4 +21,5 @@ dependencies:
   - matplotlib
   - scipy=1.10.1
   - bs4
+  - flask
   - pip

@@ -1,9 +1,10 @@
 import os
-import sys
 import json
 import pickle
 from flask import Flask, request, jsonify
-sys.path.append("/Users/kasun/Documents/uni/semester-4/thesis/NDD")
+import sys, pathlib
+
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
 
 from scripts.utils.utils import fix_json_crawling
 
@@ -11,8 +12,8 @@ from scripts.utils.utils import fix_json_crawling
 #  Global settings and baseline model info
 # -----------------------------------------------------------------
 no_of_inferences = 0
-BASE_PATH = "/Users/kasun/Documents/uni/semester-4/thesis/NDD"
-MODEL_DIR = f"{BASE_PATH}/resources/baseline-trained-classifiers"
+BASE_PATH = os.getcwd()
+MODEL_DIR = f"{BASE_PATH}/baseline-models"
 SELECTED_APPS = [
     'addressbook', 'claroline', 'ppma', 'mrbs',
     'mantisbt', 'dimeshift', 'pagekit', 'phoenix', 'petclinic'
@@ -33,10 +34,6 @@ baseline_model_info = {
     }
 }
 
-
-# -----------------------------------------------------------------
-#  Utility functions
-# -----------------------------------------------------------------
 def increase_no_of_inferences():
     global no_of_inferences
     no_of_inferences += 1
@@ -66,15 +63,8 @@ def load_baseline_model(appname, method, setting):
         clf = pickle.load(f)
     return clf
 
-
-# -----------------------------------------------------------------
-#  SAF equals for baseline methods using provided distance
-# -----------------------------------------------------------------
 def saf_equals_baseline_distance(distance, classifier):
     """
-    Given a distance (float) directly from the request,
-    use the classifier to predict if the two states are near-duplicates.
-
     Returns 1 if predicted near-duplicate (true), 0 if distinct (false).
     """
     pred = classifier.predict([[distance]])[0]

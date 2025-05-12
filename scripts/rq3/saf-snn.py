@@ -1,18 +1,18 @@
 import json
 import os
-import sys
 from flask import Flask, request, jsonify
 import torch
-import torch.nn.functional as F
 from gensim.models import Doc2Vec
 from transformers import AutoTokenizer, AutoModel, MarkupLMProcessor
+import sys, pathlib
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-sys.path.append("/Users/kasun/Documents/uni/semester-4/thesis/NDD")
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
+
 from scripts.utils.utils import fix_json_crawling, get_model, initialize_device, saf_equals, set_all_seeds
 
-base_path        = "/Users/kasun/Documents/uni/semester-4/thesis/NDD"
+base_path    = os.getcwd()
 doc2vec_path     = f"/{base_path}/resources/embedding-models/content_tags_model_train_setsize300epoch50.doc2vec.model"
 no_of_inferences = 0
 
@@ -269,7 +269,7 @@ configurations = [
         'bs': 128,
     },
 ]
-title            = "acrossapp_modernbert"
+title            = "acrossapp_modernbert" # <acrossapp or withinapp>_<doc2vec or bert or modernbert or markuplm>
 appname          = "petclinic" # appname is treated as within app -> target app and across app -> test app
 setting          = "triplet" # contrastive or triplet
 
