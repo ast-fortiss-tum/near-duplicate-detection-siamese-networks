@@ -1,7 +1,5 @@
 # Siamese Nueral Network (SSN) For Near Duplicate Detection in Web App Model Inference
 
-## 🛠️ Prerequisites
-
 ## 🚀 Get Started
 
 Follow these steps to create and activate the Conda environment to set up the project.
