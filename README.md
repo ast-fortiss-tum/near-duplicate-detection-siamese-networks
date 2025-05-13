@@ -1,4 +1,4 @@
-# Siamese Nueral Network For Near Duplicate Detection in Web App Model Inference
+# Siamese Nueral Network (SSN) For Near Duplicate Detection in Web App Model Inference
 
 ## 🛠️ Prerequisites
 
@@ -181,5 +181,28 @@ Run below commands from the project base directory one after the other. The firs
    python scripts/rq2/b-other-baselines.py
    ```
 
+### 3) RQ3: Code Coverage
+
+To integrate the state abstraction function during crawling, you want to follow the implementation of the state vertex and adjust the endpoint for your Flask app. When the crawler needs to evaluate  two states are, it can simply make a POST request to the endpoint with the necessary data, which allows the Flask app to function as the State Abstraction Function (SAF) and return the results you're looking for. 
+Run below command to up flask app. 
+   ```
+   python scripts/rq3/saf-snn.py # SNN methods
+   python scripts/rq3/saf-other-baseline.py # WEBEMBED methods
+   python scripts/rq3/saf-other-baseline.py # RTED and PDIFF
+   ```
+Use this  [example](https://github.com/crawljax/crawljax/blob/master/examples/src/main/java/com/crawljax/examples/FragCrawlExample.java) for directly evaluating the FRAGGEN method without external SAF.
+
+
+Code coverage varies depending on the application type. For PHP applications, server-side code coverage is measured, while JavaScript applications focus on client-side coverage. For crawling, we used Crawljax (5.2.4-SNAPSHOT). But it has compatibility considerations with certain versions of the Chrome driver. Alternative browsers can be used (Firefox for example) if specified in the crawl configuration. For evaluating FraGen is only possible with chrome hence we had to downgrade Chrome ( 114.0.5735.90)
+
+Refer [PHP Code Coverage README](scripts/rq3/PHP-Based-Coverage-README.md) for more details.
+
+---
+In PHP applications, code coverage measurement is conducted using the Xdebug 2.2.42 extension alongside the php-code-coverage 2.2.33 library. Both crawling and code coverage measurement occur simultaneously. It is important to start code coverage before starting the crawl and to stop it after crawling completion to generate the coverage report. 
+
+---
+For JavaScript applications, the process operates separately. Crawljax was executed for Dante, which generates corresponding Selenium test cases. Once crawling is complete, Dante can utilize the generated test case files to produce JUnit test cases. For measuring coverage in JavaScript applications, cdp4j 3.0.81, a Java implementation of Chrome DevTools, was used.
+
+Refer [JavaScript Code Coverage README](scripts/rq3/Javascript-Based-Coverage-README.md) for more details.
 
 ## ⚙️ Run New Experiment
