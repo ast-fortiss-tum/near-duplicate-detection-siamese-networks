@@ -248,7 +248,7 @@ The JAR file `resources/baseline-runner/BaseLineRunner-1.0-SNAPSHOT.jar`—gener
 Baseline Runner project files  
 
    ```
-   https://syncandshare.lrz.de/getlink/fiY4ASASASKcSXCwSLW8g8TVmnep/resources.zip
+   https://syncandshare.lrz.de/getlink/fiT5bUvN5DJfJ5uZ8JxgzC/baseline-runner.zip
    ```
 
    *Password: `snn-ndd`*
