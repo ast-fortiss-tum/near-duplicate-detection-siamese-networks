@@ -2,7 +2,7 @@
 
 ## 🚀 Get Started
 
-Follow these steps to create and activate the Conda environment to set up the project.
+Follow these steps to create and activate the Conda environment to set up the project. Use `snn-ndd` as the password to download resources.
 
 
 ### 1) Clone the repository
@@ -97,13 +97,12 @@ Applications evaluated in this work
 #### a) SNN Evaluation
 
 1. **Download resources**
-   Get `resources.zip` from:
+   `resources.zip` from:
 
    ```
    https://syncandshare.lrz.de/getlink/fiY4KcSXCwSLW8g8TVmnep/resources.zip
    ```
 
-   *Password: `snn-ndd`*
 
    2. **Unpack and move the resources folder to the base project**
 
@@ -145,8 +144,11 @@ Applications evaluated in this work
       * Trained models → `models/`
       * Cached embeddings → `embedding/`
 
-> **Re-runs** will automatically reuse any existing models or embeddings; nothing is re-trained if already present.
-
+> **Re-runs** will automatically reuse any existing models or embeddings; nothing is re-trained if already present. If you want to use trained models and embeddings, please obtain them from the link below and ensure they are located at the project parent level separately (`./models`, `./embeddings`). Then try generating the results.
+ 
+```
+https://syncandshare.lrz.de/getlink/fi14MEw1swySBLPA6emQKP/models_and_embeddings.zip
+```
 
 #### b) FragGen Evaluation
 
@@ -248,8 +250,6 @@ Baseline Runner project files
    ```
    https://syncandshare.lrz.de/getlink/fiT5bUvN5DJfJ5uZ8JxgzC/baseline-runner.zip
    ```
-
-   *Password: `snn-ndd`*
 
 #### SNN evaluation
 
