@@ -230,4 +230,49 @@ For JavaScript applications, the process operates separately. Crawljax was execu
 
 Refer [JavaScript Code Coverage README](scripts/rq3/Javascript-Based-Coverage-README.md) for more details.
 
-## ⚙️ Run New Experiment
+### 4) RQ4: Time Efficiency
+
+#### a) SNN Training Times
+SNN model training times are already recorded when you perform RQ1. In the results Excel file, you can find the training time for each model.
+
+#### b) Crawling Times
+After crawling the application in RQ3, a crawling report is generated. You can find the crawling time in the `result.json` file under **statistics → duration**.
+
+#### c) Inference Times
+Inference time is measured using 1,000 randomly selected pairs from our dataset.  
+* **RTED and PDiff:** Compute the respective distances with the Crawljax implementation, then add the classifier inference time to obtain the total inference time.  
+* **FragGen:** Use only the Crawljax classification time as the method’s inference time.
+
+The JAR file `resources/baseline-runner/BaseLineRunner-1.0-SNAPSHOT.jar`—generated from the Java project linked below—is used to obtain distance-calculation times for RTED and PDiff, and total inference time for FragGen.
+
+Baseline Runner project files  
+
+   ```
+   https://syncandshare.lrz.de/getlink/fiY4ASASASKcSXCwSLW8g8TVmnep/resources.zip
+   ```
+
+   *Password: `snn-ndd`*
+
+#### SNN evaluation
+
+Run below commands from the project base directory. Results will be saved in `results/rq4/`
+
+```
+python scripts/rq4/snn_inference_time.py
+```
+
+#### WEBEMBED evaluation
+
+Run below commands from the project base directory. Results will be saved in `results/rq4/`
+   
+```
+   python scripts/rq4/webembed_baseline_inference_time.py
+```
+
+#### Other baselines (FragGen, RTED, PDiff) evaluation
+
+Run below commands from the project base directory. Results will be saved in `results/rq4/`
+   
+```
+   python scripts/rq4/javabased_baseline_inference_time.py
+```

@@ -1,18 +1,15 @@
 import os
-import sys
 import time
 import subprocess
 import pickle
 import numpy as np
 import pandas as pd
-from gensim.models.doc2vec import Doc2Vec
-from sklearn.metrics.pairwise import cosine_similarity
-
-sys.path.append("/Users/kasun/Documents/uni/semester-4/thesis/NDD")
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
 
 from scripts.utils.utils import (
     set_all_seeds,
-    load_pairs_from_db,
+    load_pairs_from_db, create_folders_if_not_exist,
 )
 
 if __name__ == "__main__":
@@ -27,15 +24,16 @@ if __name__ == "__main__":
     ]
 
     # Base paths and directories
-    base_path       = "/Users/kasun/Documents/uni/semester-4/thesis/NDD"
+    base_path       = os.getcwd()
     db_path         = f"{base_path}/dataset/SS_refined.db"
     table_name      = "nearduplicates"
     results_dir     = f"{base_path}/results"
     dom_root_dir    = f"{base_path}/resources/doms"
     jar_path        = f"{base_path}/resources/baseline-runner/BaseLineRunner-1.0-SNAPSHOT.jar"
-    classifier_path = f"/Users/kasun/Documents/uni/semester-4/thesis/Baseline-NDD/trained_classifiers"
+    classifier_path = f"{base_path}/baseline-models"
 
-    output_file = f"{results_dir}/rq4/rted_pdiff_inference_times.xlsx"
+    create_folders_if_not_exist([results_dir])
+    output_file = f"{results_dir}/rq4/other_baseline_inference_times.xlsx"
 
     # Sample size for pairs
     sample_size = 1000

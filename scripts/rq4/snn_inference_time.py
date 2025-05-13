@@ -1,21 +1,21 @@
 import os
-import sys
 import time
 
 import pandas as pd
 import torch
 from gensim.models import Doc2Vec
 from transformers import AutoTokenizer, AutoModel, MarkupLMProcessor
-import torch.nn.functional as F
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
-sys.path.append("/Users/kasun/Documents/uni/semester-4/thesis/NDD")
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
+
 from scripts.utils.utils import (
     get_model,
     set_all_seeds,
     load_pairs_from_db,
     initialize_device,
-    saf_equals
+    saf_equals, create_folders_if_not_exist
 )
 
 if __name__ == "__main__":
@@ -53,11 +53,11 @@ if __name__ == "__main__":
         },
     }
 
-    base_path       = "/Users/kasun/Documents/uni/semester-4/thesis/NDD"
+    base_path       = os.getcwd()
     table_name      = "nearduplicates"
     db_path         = f"{base_path}/dataset/SS_refined.db"
     dom_root_dir    = f"{base_path}/resources/doms"
-    results_dir     = f"{base_path}/results"
+    results_dir     = f"{base_path}/results/rq4"
     model_dir       = f"{base_path}/models"
     emb_dir         = f"{base_path}/embeddings"
     doc2vec_path    = f"{base_path}/resources/embedding-models/content_tags_model_train_setsize300epoch50.doc2vec.model"
@@ -319,7 +319,8 @@ if __name__ == "__main__":
     # class distribution of the sampled datset
     print("\nClass distribution of the sample :")
     print(SS_sampled['appname'].value_counts())
-    
+    create_folders_if_not_exist([results_dir])
+
     for current_config in configurations:
         model_name       = current_config['model_name']
         setting          = current_config['setting']
@@ -439,7 +440,7 @@ if __name__ == "__main__":
 
             
     df = pd.DataFrame(results)
-    df.to_excel(f"{results_dir}/rq4/snn_inference_times_new.xlsx", index=False)
+    df.to_excel(f"{results_dir}/snn_inference_times_new.xlsx", index=False)
     print(f"\nSNN inference times saved")
         
         

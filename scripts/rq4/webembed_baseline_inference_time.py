@@ -1,5 +1,4 @@
 import os
-import sys
 import time
 import pickle
 import numpy as np
@@ -7,11 +6,12 @@ import pandas as pd
 from gensim.models.doc2vec import Doc2Vec
 from sklearn.metrics.pairwise import cosine_similarity
 
-sys.path.append("/Users/kasun/Documents/uni/semester-4/thesis/NDD")
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
 
 from scripts.utils.utils import (
     set_all_seeds,
-    load_pairs_from_db, initialize_device, embed_dom_doc2vec_crawling,
+    load_pairs_from_db, initialize_device, embed_dom_doc2vec_crawling, create_folders_if_not_exist,
 )
 
 if __name__ == "__main__":
@@ -25,15 +25,17 @@ if __name__ == "__main__":
     ]
     
     # Paths
-    base_path   = "/Users/kasun/Documents/uni/semester-4/thesis/NDD"
+    base_path   = os.getcwd()
     db_path     = f"{base_path}/dataset/SS_refined.db"
     table_name  = "nearduplicates"
-    results_dir = f"{base_path}/results"
+    results_dir = f"{base_path}/results/rq4"
     dom_root_dir = f"{base_path}/resources/doms"
 
     doc2vec_path    = f"{base_path}/resources/embedding-models/content_tags_model_train_setsize300epoch50.doc2vec.model"
-    classifier_path = f"/Users/kasun/Documents/uni/semester-4/thesis/Baseline-NDD/trained_classifiers"
-    output_file     = f"{results_dir}/rq4/inference_times_baseline_webembed.xlsx"
+    classifier_path =  f"{base_path}/baseline-models"
+
+    create_folders_if_not_exist([results_dir])
+    output_file     = f"{results_dir}/inference_times_baseline_webembed.xlsx"
     
     # Sample size
     sample_size = 1000
@@ -134,5 +136,5 @@ if __name__ == "__main__":
     # Save results
     # -------------------------------------------------------------------------
     df = pd.DataFrame(results)
-    df.to_excel(f"{results_dir}/rq4/webembed_inference_times.xlsx", index=False)
+    df.to_excel(f"{results_dir}/webembed_inference_times.xlsx", index=False)
     print(f"\n[Info] Baseline WebEmbed inference times saved")
