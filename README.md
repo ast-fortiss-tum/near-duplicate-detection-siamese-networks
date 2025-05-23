@@ -1,4 +1,4 @@
-# Siamese Nueral Network (SSN) For Near Duplicate Detection in Web App Model Inference
+# Siamese Neural Network (SSN) For Near Duplicate Detection in Web App Model Inference
 
 ## 🚀 Get Started
 
