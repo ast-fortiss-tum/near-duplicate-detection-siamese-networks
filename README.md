@@ -2,7 +2,7 @@
 
 ## 🚀 Get Started
 
-Follow these steps to create and activate the Conda environment to set up the project. Use  <span style="color:red;">snn-ndd</span> as the password to download resources.
+Follow these steps to create and activate the Conda environment to set up the project. Use ``snn-ndd`` as the password to download resources.
 
 
 ### 1) Clone the repository
@@ -97,11 +97,10 @@ Applications evaluated in this work
 #### a) SNN Evaluation
 
 1. **Download resources**
-   `resources.zip` from:
+   `resources.zip` from (use password password as ``snn-ndd``):
 
    ```
    https://syncandshare.lrz.de/getlink/fiY4KcSXCwSLW8g8TVmnep/resources.zip
-   password - (snn-ndd)
    ```
 
 
