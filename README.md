@@ -2,7 +2,7 @@
 
 ## 🚀 Get Started
 
-Follow these steps to create and activate the Conda environment to set up the project. Use <code style="color: red">snn-ndd</code> as the password to download resources.
+Follow these steps to create and activate the Conda environment to set up the project. Use {\color{red}snn-ndd} as the password to download resources.
 
 
 ### 1) Clone the repository
