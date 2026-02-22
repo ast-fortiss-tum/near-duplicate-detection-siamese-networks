@@ -274,3 +274,20 @@ Run below commands from the project base directory. Results will be saved in `re
 ```
    python scripts/rq4/javabased_baseline_inference_time.py
 ```
+## 📖 Reference
+
+If you use our work in your research, if you extend it, or if you simply like it, please cite it in your publications.
+
+Here is an example BibTeX entry:
+
+```bibtex
+@inproceedings{2026-Kanaththage-ICST,
+  	author    = {Kasun Kanaththage and Luigi Libero Lucio Starace and Matteo Biagiola and Paolo Tonella and Andrea Stocco},
+  	title     = {Neural Embeddings for Web Testing},
+	booktitle  = {Proceedings of the 19th IEEE International Conference on Software Testing, Verification and Validation},
+	series     = {ICST '26},
+	publisher  = {IEEE},
+	abbr       = {ICST},
+	year       = 2026
+}
+```
